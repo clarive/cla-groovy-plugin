@@ -1,0 +1,43 @@
+#: init/groovy-service.js
+msgid "Run Groovy Code"
+msgstr "Ejecutar código de Groovy"
+
+#: init/groovy-service.js
+msgid "Groovy execute"
+msgstr "Ejecutar Groovy"
+
+#: init/groovy-service.js
+msgid "Groovy ship file"
+msgstr "Envío de archivo Groovy"
+
+#: init/groovy-service.js
+msgid "Executing Groovy code"
+msgstr "Ejecutando el código de Groovy"
+
+#: init/groovy-service.js
+msgid "Groovy remove file"
+msgstr "Eliminando archivo Groovy"
+
+#: init/groovy-service.js
+msgid "Groovy code executed: "
+msgstr "Código de Groovy ejecutado: "
+
+#: public/form/groovy-form.js
+msgid "Server"
+msgstr "Servidor"
+
+#: public/form/groovy-form.js
+msgid "Groovy path"
+msgstr "Ruta de Groovy"
+
+#: public/form/groovy-form.js
+msgid "Groovy parameters"
+msgstr "Parámetros de Groovy"
+
+#: public/form/groovy-form.js
+msgid "Code Editor"
+msgstr "Editor de código"
+
+#: public/form/groovy-form.js
+msgid "Remote temp path"
+msgstr "Ruta temporal remota"
