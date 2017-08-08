@@ -4,7 +4,6 @@ reg.register('service.groovy.run', {
     name: _('Run Groovy Code'),
     icon: '/plugin/cla-groovy-plugin/icon/groovy.svg',
     form: '/plugin/cla-groovy-plugin/form/groovy-form.js',
-    roles: ["EsxiVmware"],
     handler: function(ctx, config) {
 
         var ci = require("cla/ci");
