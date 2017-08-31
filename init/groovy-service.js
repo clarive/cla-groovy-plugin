@@ -21,6 +21,8 @@ reg.register('service.groovy.run', {
         var remoteTempPath = config.remoteTempPath;
         var isJob = ctx.stash("job_dir");
         var groovyPath = config.groovyPath;
+        var fileName = "clarive-groovy-code-" + Date.now() + ".groovy";
+
 
         function remoteCommand(params, command, server, errors) {
             var output = reg.launch('service.scripting.remote', {
@@ -55,10 +57,10 @@ reg.register('service.groovy.run', {
 
 
         if (isJob) {
-            filePath = path.join(isJob, "groovy-code.groovy");
+            filePath = path.join(isJob, fileName);
             fs.createFile(filePath, config.code);
         } else {
-            filePath = path.join(CLARIVE_TEMP, "groovy-code.groovy");
+            filePath = path.join(CLARIVE_TEMP, fileName);
             fs.createFile(filePath, config.code);
         }
 
@@ -72,7 +74,7 @@ reg.register('service.groovy.run', {
         }
 
         shipFiles(server, filePath, remoteTempPath);
-        var remoteFilePath = path.join(remoteTempPath, "groovy-code.groovy");
+        var remoteFilePath = path.join(remoteTempPath, fileName);
         var groovyRemoteCommand = groovyCommand + groovyParams + " " + remoteFilePath;
 
         log.info(_("Executing Groovy code"));
