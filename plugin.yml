@@ -1,0 +1,9 @@
+name: Clarive Groovy Plugin
+description: Groovy plugin will allow you to execute a Groovy code in Clarive and see its result.
+version: 1.0
+icon: https://github.com/clarive/cla-groovy-plugin/public/icon/groovy.svg
+url: https://github.com/clarive/cla-groovy-plugin
+requires:
+  - clarive_version: 6.8 <= version
+dependencies:
+  - cla-groovy-plugin
