@@ -1,4 +1,4 @@
-name: Clarive Groovy Plugin
+name: Groovy Plugin
 description: Groovy plugin will allow you to execute a Groovy code in Clarive and see its result.
 version: 1.0
 icon: https://cdn.rawgit.com/clarive/cla-groovy-plugin/master/public/icon/groovy.svg?sanitize=true
