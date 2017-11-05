@@ -4,32 +4,54 @@ reg.register('service.groovy.run', {
     name: _('Run Groovy Code'),
     icon: '/plugin/cla-groovy-plugin/icon/groovy.svg',
     form: '/plugin/cla-groovy-plugin/form/groovy-form.js',
+    rulebook: {
+        moniker: 'groovy_script',
+        description: _('Executes Groovy script'),
+        required: ['server', 'remote_temp_path', 'code'],
+        allow: ['server', 'remote_temp_path', 'code', 'groovy_path', 'groovy_args', 'user', 'errors'],
+        mapper: {
+            'remote_temp_path': 'remoteTempPath',
+            'groovy_path': 'groovyPath',
+            'groovy_args': 'groovyArgs'
+        },
+        examples: [{
+            groovy_script: {
+                server: 'groovy_script',
+                user: 'clarive_user',
+                remote_temp_path: "/tmp/scripts/",
+                groovy_path: "",
+                groovy_args: ["-d"],
+                code: `println "Hello World"`,
+                errors: "fail"
+            }
+        }]
+    },
     handler: function(ctx, config) {
 
-        var ci = require("cla/ci");
         var log = require("cla/log");
         var fs = require("cla/fs");
         var path = require('cla/path');
         var reg = require('cla/reg');
         var proc = require("cla/process");
-        var CLARIVE_BASE = proc.env('CLARIVE_BASE');
         var CLARIVE_TEMP = proc.env('TMPDIR');
         var filePath;
-        var errors = config.errors;
+        var errors = config.errors || "fail";
         var server = config.server;
         var response;
-        var remoteTempPath = config.remoteTempPath;
+        var remoteTempPath = config.remoteTempPath || "";
         var isJob = ctx.stash("job_dir");
-        var groovyPath = config.groovyPath;
+        var groovyPath = config.groovyPath || "";
         var fileName = "clarive-groovy-code-" + Date.now() + ".groovy";
+        var user = config.user || "";
 
 
-        function remoteCommand(params, command, server, errors) {
+        function remoteCommand(params, command, server, errors, user) {
             var output = reg.launch('service.scripting.remote', {
                 name: _('Groovy execute'),
                 config: {
                     errors: errors,
                     server: server,
+                    user: user,
                     path: command,
                     output_error: params.output_error,
                     output_warn: params.output_warn,
@@ -44,11 +66,12 @@ reg.register('service.groovy.run', {
             return output;
         }
 
-        function shipFiles(server, filePath, remoteTempPath) {
+        function shipFiles(server, filePath, remoteTempPath, user) {
             var output = reg.launch('service.fileman.ship', {
                 name: _('Groovy ship file'),
                 config: {
                     server: server,
+                    user: user,
                     local_path: filePath,
                     remote_path: remoteTempPath
                 }
@@ -73,17 +96,18 @@ reg.register('service.groovy.run', {
             groovyCommand = groovyPath + " ";
         }
 
-        shipFiles(server, filePath, remoteTempPath);
+        shipFiles(server, filePath, remoteTempPath, user);
         var remoteFilePath = path.join(remoteTempPath, fileName);
         var groovyRemoteCommand = groovyCommand + groovyParams + " " + remoteFilePath;
 
         log.info(_("Executing Groovy code"));
-        response = remoteCommand(config, groovyRemoteCommand, server, errors);
+        response = remoteCommand(config, groovyRemoteCommand, server, errors, user);
         reg.launch('service.scripting.remote', {
             name: _('Groovy remove file'),
             config: {
                 errors: errors,
                 server: server,
+                user: user,
                 path: "rm " + remoteFilePath
             }
         });

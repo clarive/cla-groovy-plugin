@@ -10,7 +10,15 @@
         width: 400,
         with_vars: 1
     });
-    
+
+    var userTextField = Cla.ui.textField({
+        name: 'user',
+        fieldLabel: _('User'),
+        value: data.user || '',
+        allowBlank: true
+    });
+
+
     var groovyPathTextField = Cla.ui.textField({
         name: 'groovyPath',
         fieldLabel: _('Groovy path'),
@@ -57,6 +65,7 @@
         layout: 'form',
         items: [
             serverComboBox,
+            userTextField,
             groovyPathTextField,
             argumentsTextField,
             remoteTempPathTextField,
