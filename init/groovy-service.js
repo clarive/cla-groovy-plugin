@@ -32,6 +32,7 @@ reg.register('service.groovy.run', {
         var fs = require("cla/fs");
         var path = require('cla/path');
         var reg = require('cla/reg');
+        var ci = require('cla/ci');
         var proc = require("cla/process");
         var CLARIVE_TEMP = proc.env('TMPDIR');
         var filePath;
@@ -44,6 +45,15 @@ reg.register('service.groovy.run', {
         var fileName = "clarive-groovy-code-" + Date.now() + ".groovy";
         var user = config.user || "";
 
+        if (server == "") {
+            log.fatal(_("No server selected"));
+        }
+        var serverCheck = ci.findOne({
+            mid: server + ''
+        });
+        if (!serverCheck){
+            log.fatal(_("Server Resource doesn't exist"));
+        }
 
         function remoteCommand(params, command, server, errors, user) {
             var output = reg.launch('service.scripting.remote', {
