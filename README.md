@@ -1,6 +1,6 @@
 # Groovy Plugin
 
-<img src="https://cdn.rawgit.com/clarive/cla-groovy-plugin/master/public/icon/groovy.svg?sanitize=true" alt="Groovy Plugin" title="Groovy Plugin" width="120" height="120">
+<img src="https://cdn.jsdelivr.net/gh/clarive/cla-groovy-plugin/public/icon/groovy.svg?sanitize=true" alt="Groovy Plugin" title="Groovy Plugin" width="120" height="120">
 
 Groovy plugin will allow you to execute a Groovy code in Clarive and see its result.
 
